@@ -1,0 +1,51 @@
+<!-- homepage for the user once they are logged in -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Character encoding and viewport settings for responsive design -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Personal Finance Management</title>
+
+    <!-- Including Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Page Heading. welcomes the user to the dashboard.-->
+        <h1 class="my-5 text-center">Welcome to Your Personal Finance Dashboard</h1>
+
+        <!-- Greeting the logged-in user with their username -->
+        <p>Hello, {{ current_user.username }}!</p>
+
+        <!-- Row of options for the user -->
+        <div class="row">
+            <!-- First column for Expenses -->
+            <div class="col-md-4">
+                <h3>Expenses</h3>
+                <!-- Link to view all expenses -->
+                <p><a href="{{ url_for('get_all_expenses') }}">View Expenses</a></p>
+                <!-- Link to add a new expense -->
+                <p><a href="{{ url_for('add_expense') }}">Add New Expense</a></p>
+            </div>
+
+            <!-- Second column for Incomes -->
+            <div class="col-md-4">
+                <h3>Incomes</h3>
+                <!-- Link to view all incomes -->
+                <p><a href="{{ url_for('get_all_incomes') }}">View Incomes</a></p>
+                <!-- Link to add a new income -->
+                <p><a href="{{ url_for('add_income') }}">Add New Income</a></p>
+            </div>
+        </div>
+
+        <!-- Logout button that redirects to the logout route -->
+        <a href="{{ url_for('logout') }}" class="btn btn-danger mt-5">Logout</a>
+    </div>
+
+    <!-- Including Bootstrap JS and dependencies for responsive behavior and interactive components allows you to use pre-built components (like buttons, forms, grids, etc.) that are responsive and look good out of the box.-->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Management</title>
+</head>
+<body>
+    <h1>Welcome to Personal Finance Management</h1>
+
+    <!-- Check if the user is logged in, If the user is logged in, it will display a message like: Welcome, <username>. -->
+    {% if current_user.is_authenticated %}
+        <p>Welcome, {{ current_user.username }}!</p>
+        <p><a href="/expenses">View Expenses</a> | <a href="/incomes">View Incomes</a></p> <!--to handle the respective actions like showing expenses, logging in, or registering.  --> 
+        <p><a href="/logout">Logout</a></p>  <!-- Log out link for authenticated users -->
+    {% else %}
+        <p><a href="/login">Login</a> | <a href="/register">Register</a></p>  <!-- Links for non-authenticated users -->
+    {% endif %}
+
+</body>
+</html>
