@@ -49,8 +49,8 @@ def home():
 @finance.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
+        username = request.form.get["username"]
+        password = request.form.get["password"]
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
 
         user = User(id=len(users) + 1, username=username, password=hashed_password)
@@ -61,21 +61,29 @@ def register():
     return render_template("register.html")
 
 #We use login_user() to log in a user, and logout_user() to log them out.
-# Login route
-@finance.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        
-        user = next((u for u in users if u.username == username), None)
-        if user and bcrypt.check_password_hash(user.password, password):  #The passwords are hashed using Flask-Bcrypt to ensure security.
-            login_user(user)
-            return redirect(url_for("home"))
-        
-        flash("Invalid username or password", "danger")
+from flask import request, render_template, redirect, url_for, flash
 
-    return render_template("login.html")
+@finance.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # Safely access form data using the get() method to avoid KeyError
+        username = request.form.get("username")  # Use .get() to avoid KeyError
+        password = request.form.get("password")
+
+        # Check if either username or password is missing
+        if not username or not password:
+            flash("Please enter both username and password", "danger")
+            return redirect(url_for('login'))  # Redirect back to login page
+
+        # Perform authentication here (e.g., check user credentials)
+        # Example of simple validation (you should use proper hashing in a real app)
+        if username == "correct_username" and password == "correct_password":
+            return redirect(url_for('dashboard'))  # Redirect to the dashboard or home page
+
+        flash("Invalid credentials", "danger")
+        return redirect(url_for('login'))  # Redirect back to login page
+
+    return render_template('login.html')
 
 # Logout route
 @finance.route("/logout")
@@ -213,4 +221,4 @@ def get_monthly_summary(year, month):
 
 
 if __name__ == "__main__":
-    finance.run(debug=True, port=5003)
+    finance.run(debug=True, port=5004)
